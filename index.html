@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Ulang Tahun Sayangku! 🎂💕</title>
+    <title>Selamat Ulang Tahun Sayangku 💕</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Poppins', sans-serif; 
-            overflow-x: hidden;
-            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
+            height: 100vh; overflow: hidden;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #ff9ff3, #ffecd2);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            min-height: 100vh;
+            animation: gradientShift 12s ease infinite;
+            display: flex; align-items: center; justify-content: center;
         }
         
         @keyframes gradientShift {
@@ -23,287 +23,304 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* Floating hearts */
-        .hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .heart { 
-            position: absolute; 
-            font-size: 20px; 
-            color: #ff69b4; 
-            animation: float 6s infinite linear; 
-        }
+        /* Floating Elements */
+        .floating { position: fixed; z-index: 1; pointer-events: none; }
+        .heart { font-size: 25px; animation: float 8s infinite linear; }
+        .star { font-size: 20px; animation: float 10s infinite linear reverse; }
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
         
-        /* Main container */
-        .container { max-width: 800px; margin: 0 auto; padding: 2rem; position: relative; z-index: 10; }
+        /* Slides Container */
+        .slides-container { 
+            width: 100%; height: 100vh; position: relative; 
+            display: flex; align-items: center; justify-content: center;
+        }
+        .slide { 
+            width: 100%; height: 100%; 
+            display: flex; flex-direction: column; 
+            align-items: center; justify-content: center;
+            text-align: center; padding: 2rem;
+            opacity: 0; transform: scale(0.8) translateY(50px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .slide.active { 
+            opacity: 1; transform: scale(1) translateY(0); 
+        }
         
-        /* Hero */
-        .hero { text-align: center; animation: fadeInUp 1.5s ease; }
-        .hero h1 { 
-            font-size: clamp(2.5rem, 8vw, 5rem); 
-            background: linear-gradient(45deg, #ff6b9d, #c44569, #ff9ff3); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            margin-bottom: 1rem;
-            text-shadow: 0 0 30px rgba(255, 107, 157, 0.5);
+        /* Intro Slide */
+        .intro { background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); }
+        .intro h1 { 
+            font-size: clamp(2rem, 8vw, 4rem); 
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #ff9ff3);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem; animation: glow 2s ease-in-out infinite alternate;
         }
-        .hero .name { 
-            font-size: clamp(3rem, 10vw, 7rem); 
-            color: #ff4757; 
-            font-weight: 700; 
-            margin: 0.5rem 0;
-            animation: bounce 2s infinite;
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px #ff6b9d); }
+            to { filter: drop-shadow(0 0 30px #ff9ff3); }
         }
+        .start-btn { 
+            background: linear-gradient(45deg, #ff6b9d, #c44569); 
+            color: white; border: none; padding: 1.2rem 3rem;
+            border-radius: 50px; font-size: 1.3rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(255,107,157,0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .start-btn:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 20px 40px rgba(255,107,157,0.6); }
+        
+        /* Birthday Slide */
+        .birthday-slide .cake { font-size: 5rem; margin: 2rem 0; animation: bounce 2s infinite; }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
         }
-        .cake { font-size: 4rem; animation: wiggle 2s infinite; }
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            75% { transform: rotate(-5deg); }
+        .nama-pacar { 
+            font-size: clamp(3rem, 12vw, 6rem); 
+            background: linear-gradient(45deg, #ff4757, #ff6b9d); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 1rem 0; font-weight: 700;
         }
         
         /* Photo */
         .photo { 
-            width: 250px; height: 250px; 
-            margin: 2rem auto; 
-            border-radius: 50%; 
-            background: linear-gradient(45deg, #ff9a9e, #fecfef); 
+            width: 280px; height: 280px; margin: 2rem 0;
+            border-radius: 50%; background: linear-gradient(45deg, #ff9a9e, #fecfef);
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 20px 40px rgba(255, 71, 87, 0.3);
-            animation: pulse 3s infinite;
-            border: 8px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 25px 50px rgba(255,71,87,0.4); border: 10px solid rgba(255,255,255,0.9);
+            animation: floatIn 1.5s ease-out;
         }
         .photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        @keyframes pulse {
-            0% { box-shadow: 0 20px 40px rgba(255, 71, 87, 0.3); }
-            50% { box-shadow: 0 20px 60px rgba(255, 71, 87, 0.6); }
-            100% { box-shadow: 0 20px 40px rgba(255, 71, 87, 0.3); }
+        @keyframes floatIn {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
         
         /* Messages */
-        .messages { margin: 3rem 0; }
         .message { 
-            background: rgba(255, 255, 255, 0.9); 
-            padding: 2rem; 
-            margin: 2rem 0; 
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.5);
-            animation: slideIn 1s ease forwards;
-            opacity: 0;
-            transform: translateX(-50px);
+            background: rgba(255,255,255,0.95); 
+            padding: 2.5rem; margin: 2rem 0; max-width: 600px;
+            border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.8);
+            font-size: 1.3rem; line-height: 1.7;
         }
-        .message:nth-child(1) { animation-delay: 0.5s; }
-        .message:nth-child(2) { animation-delay: 1s; }
-        .message:nth-child(3) { animation-delay: 1.5s; }
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .message h3 { color: #ff6b9d; margin-bottom: 1rem; font-size: 1.3rem; }
+        .pesan-inti { background: linear-gradient(45deg, #ff6b9d, #c44569); color: white !important; }
         
-        /* Button */
-        .btn { 
-            display: inline-block; 
-            background: linear-gradient(45deg, #ff6b9d, #c44569); 
-            color: white; 
-            padding: 1.2rem 3rem; 
-            border-radius: 50px; 
-            text-decoration: none; 
-            font-size: 1.2rem; 
-            font-weight: 600;
-            margin: 2rem 0.5rem;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            animation: shake 0.5s infinite;
+        /* Navigation */
+        .nav-buttons { position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 100; }
+        .nav-btn { 
+            background: rgba(255,255,255,0.9); border: none; 
+            width: 60px; height: 60px; border-radius: 50%; 
+            margin: 0 1rem; cursor: pointer; font-size: 1.5rem;
+            transition: all 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6); }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
+        .nav-btn:hover { transform: scale(1.2); background: white; }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none !important; }
         
-        /* Countdown */
-        .countdown { 
-            background: rgba(255,255,255,0.9); 
-            padding: 2rem; 
-            border-radius: 20px; 
-            margin: 2rem 0;
-            text-align: center;
-            backdrop-filter: blur(10px);
+        /* Progress Dots */
+        .progress { position: fixed; top: 3rem; left: 50%; transform: translateX(-50%); z-index: 100; }
+        .dot { 
+            width: 15px; height: 15px; border-radius: 50%; 
+            margin: 0 0.5rem; background: rgba(255,255,255,0.5);
+            transition: all 0.3s; display: inline-block;
         }
-        .countdown h3 { color: #ff4757; font-size: 1.5rem; margin-bottom: 1rem; }
-        .time { font-size: 3rem; font-weight: 700; color: #ff6b9d; }
-        
-        /* Music player */
-        .music { text-align: center; margin: 2rem 0; }
-        .music-note { font-size: 3rem; color: #ff9ff3; animation: bounce 1s infinite; }
+        .dot.active { background: #ff6b9d; transform: scale(1.5); box-shadow: 0 0 20px #ff6b9d; }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .photo { width: 200px; height: 200px; }
+            .message { padding: 1.5rem; font-size: 1.1rem; }
+            .nav-buttons { bottom: 2rem; }
+            .progress { top: 2rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Hearts -->
-    <div class="hearts" id="hearts"></div>
-
-    <div class="container">
-        <!-- Hero -->
-        <div class="hero">
-            <div class="cake">🎂✨</div>
-            <h1>Selamat Ulang Tahun</h1>
-            <div class="name" id="namaPacar">Sayangku [nanaa]</div>
-            <div style="font-size: 1.5rem; margin: 1rem 0;">Kamu adalah hadiah terbaik dalam hidupku 💕</div>
+    <!-- Floating Elements -->
+    <div class="floating" id="floating"></div>
+    
+    <!-- Slides -->
+    <div class="slides-container">
+        <!-- Slide 1: Intro -->
+        <div class="slide active intro" data-slide="1">
+            <h1>I Made This<br>Just For You 💕</h1>
+            <p style="font-size: 1.5rem; margin: 2rem 0; color: rgba(255,255,255,0.9);">Click to start your special birthday journey</p>
+            <button class="start-btn" onclick="nextSlide()">Mulai Petualangan Sayang ✨</button>
         </div>
-
-        <!-- Photo -->
-        <div class="photo" id="fotoPacar">
-            <!-- Ganti dengan foto pacar kamu -->
-            <img src="https://via.placeholder.com/250/ff9a9e/ffffff?text=💕+Foto+Sayang+💕" alt="Foto Pacar">
-        </div>
-
-        <!-- Countdown -->
-        <div class="countdown">
-            <h3>🎈 Countdown Kejutan 🎈</h3>
-            <div class="time" id="countdown">Loading...</div>
-        </div>
-
-        <!-- Messages -->
-        <div class="messages">
-            <div class="message">
-                <h3>💌 Pesan #1</h3>
-                <p>Selama setahun ini bersamamu, aku belajar arti cinta yang sebenarnya. Kamu bikin hari-hariku penuh warna! 🌈</p>
+        
+        <!-- Slide 2: Birthday -->
+        <div class="slide" data-slide="2">
+            <div class="cake">🎂🥳✨</div>
+            <div class="nama-pacar" id="namaPacar">[NAMA PACAR]</div>
+            <div style="font-size: 2rem; margin: 1rem 0; color: rgba(255,255,255,0.95);">Selamat Ulang Tahun Ke-[UMUR]! 🎈</div>
+            <div class="photo" id="fotoPacar">
+                <img src="https://via.placeholder.com/280/ff9a9e/ffffff?text=💕+Foto+💕" alt="Foto Pacar">
             </div>
-            <div class="message">
-                <h3>💌 Pesan #2</h3>
-                <p>Setiap senyummu adalah alasan aku bangun pagi. Tiap pelukmu adalah obat terbaik. Kamu luar biasa! 🥰</p>
-            </div>
-            <div class="message">
-                <h3>💌 Pesan #3</h3>
-                <p>Di ulang tahunmu ini, aku janji akan selalu ada buat kamu. Happy birthday my love! Selamanya bersamamu 💍✨</p>
-            </div>
+            <button class="start-btn" onclick="nextSlide()">Next → Pesan Pertama 💌</button>
         </div>
-
-        <!-- Buttons -->
-        <div style="text-align: center;">
-            <a href="#" class="btn" onclick="showSurprise()">🎁 Buka Kado Kejutan</a>
-            <a href="#" class="btn" onclick="playMusic()">🎵 Putar Lagu Kesukaan</a>
-            <a href="#" class="btn" onclick="sendLove()">💕 Kirim Cinta</a>
+        
+        <!-- Slide 3: Pesan 1 -->
+        <div class="slide" data-slide="3">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; background: linear-gradient(45deg, #ff9ff3, #ff6b9d); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Pesan #1 💕</h2>
+            <div class="message">
+                Sayangku, setiap hari bersamamu adalah petualangan terbaik dalam hidupku. Senyummu adalah matahari yang menerangi hariku 🌞
+            </div>
+            <button class="start-btn" onclick="nextSlide()">Lanjut Pesan #2 →</button>
         </div>
-
-        <!-- Music -->
-        <div class="music">
-            <div class="music-note">♪ ♫ ♬</div>
-            <p>Klik tombol lagu buat suasana romantis! 💃🕺</p>
+        
+        <!-- Slide 4: Pesan 2 -->
+        <div class="slide" data-slide="4">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; background: linear-gradient(45deg, #ff6b9d, #fecfef); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Pesan #2 💖</h2>
+            <div class="message">
+                Pelukmu adalah rumahku, tatapanmu adalah kedamaianku. Kamu bukan hanya pacarku, tapi sahabat terbaikku selamanya 🏠❤️
+            </div>
+            <button class="start-btn" onclick="nextSlide()">Pesan #3 Menanti →</button>
+        </div>
+        
+        <!-- Slide 5: Pesan 3 -->
+        <div class="slide" data-slide="5">
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; background: linear-gradient(45deg, #c44569, #ff4757); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Pesan #3 💗</h2>
+            <div class="message">
+                Di setiap detik, menit, jam bersamamu, aku bersyukur Tuhan mempertemukan kita. Kamu adalah jawaban doaku 🙏✨
+            </div>
+            <button class="start-btn" onclick="nextSlide()">Baca Pesan INTI →</button>
+        </div>
+        
+        <!-- Slide 6: Pesan INTI -->
+        <div class="slide" data-slide="6">
+            <div style="font-size: 3rem; margin-bottom: 2rem;">💍 PESAN INTI 💍</div>
+            <div class="message pesan-inti">
+                <strong>Sayangku...</strong><br><br>
+                Hari ini bukan hanya ulang tahunmu, tapi juga hari di mana aku mau bilang:<br>
+                <strong>"Aku mau menghabiskan sisa hidupku bersamamu."</strong><br><br>
+                Kamu mau jadi istriku? 💕<br>
+                <strong>Happy Birthday My Forever Love! 🎂💖</strong>
+            </div>
+            <button class="start-btn" onclick="restart()">Ulangi Keajaiban ✨</button>
         </div>
     </div>
+    
+    <!-- Navigation -->
+    <div class="progress" id="progress"></div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="prevSlide()" id="prevBtn">⬅️</button>
+        <button class="nav-btn" onclick="nextSlide()" id="nextBtn">➡️</button>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundjay.com/misc/sounds/romantic-piano-1.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // Customizable - GANTI INI SESUAI PACAR KAMU
+        // 🎵 CUSTOMIZE INI DULU!
         const pacar = {
-            nama: "CINTA",  // Ganti nama pacar
-            umur: 22,        // Ganti umur
-            foto: "https://via.placeholder.com/250/ff9a9d/ffffff?text=💕+Foto+Sayang+💕", // Upload foto ke imgur.com gratis
-            tanggalLahir: "2002-12-25", // YYYY-MM-DD
-            lagu: "https://youtu.be/wXmsqoGrAic?si=ksRiwxfXl_D6wUNJ" // Link lagu kesukaan (YouTube)
+            nama: "SAYANGKU",      // ← GANTI NAMA
+            umur: 22,              // ← GANTI UMUR
+            foto: "https://i.imgur.com/YOUR_PHOTO.jpg",  // ← LINK IMGUR FOTO
+            lagu: "https://www.youtube.com/watch?v=YOUR_SONG"  // ← LAGU YOUTUBE
         };
 
-        // Set nama dan foto
+        // Set data pacar
         document.getElementById('namaPacar').textContent = pacar.nama;
         document.getElementById('fotoPacar').querySelector('img').src = pacar.foto;
 
-        // Floating hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = ['💕','💖','💗','💓','💞','💝'][Math.floor(Math.random()*6)];
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random()*3 + 3) + 's';
-            document.getElementById('hearts').appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
-        setInterval(createHeart, 300);
+        // State
+        let currentSlide = 1;
+        const totalSlides = 6;
+        const slides = document.querySelectorAll('.slide');
+        const bgMusic = document.getElementById('bgMusic');
 
-        // Countdown
-        function updateCountdown() {
-            const now = new Date();
-            const nextBirthday = new Date(now.getFullYear(), new Date(pacar.tanggalLahir).getMonth(), new Date(pacar.tanggalLahir).getDate());
-            if (now > nextBirthday) nextBirthday.setFullYear(now.getFullYear() + 1);
-            const diff = nextBirthday - now;
-            const days = Math.floor(diff / (1000*60*60*24));
-            const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-            document.getElementById('countdown').textContent = `${days}H ${hours}J lagi! 🎉`;
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 3600000);
+        // Init
+        createFloatingElements();
+        updateProgress();
+        updateNavButtons();
 
-        // Kejutan functions
-        function showSurprise() {
-            const surprises = [
-                "🎁 Kamu dapat hadiah spesial dari hatiku!",
-                "💍 Aku mau bilang... I LOVE YOU FOREVER! 💕",
-                "🌟 Kamu adalah bintang terindah di hidupku!",
-                "💖 Selamat ulang tahun calon istriku! 😘"
-            ];
-            alert(surprises[Math.floor(Math.random()*surprises.length)]);
-        }
-
-        function playMusic() {
-            window.open(pacar.lagu, '_blank');
-            confettiEffect();
-        }
-
-        function sendLove() {
-            const hearts = ['💕','💖','💗','💓','💞','💝','😘','🥰','😍'];
-            for(let i=0; i<50; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.innerHTML = hearts[Math.floor(Math.random()*hearts.length)];
-                    heart.style.position = 'fixed';
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.top = '90vh';
-                    heart.style.fontSize = '30px';
-                    heart.style.pointerEvents = 'none';
-                    heart.style.zIndex = '1000';
-                    heart.style.animation = 'float 3s linear forwards';
-                    document.body.appendChild(heart);
-                    setTimeout(() => heart.remove(), 3000);
-                }, i*50);
+        // Navigation
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                goToSlide(currentSlide + 1);
             }
         }
 
-        // Auto confetti on load
-        window.onload = () => {
-            setTimeout(confettiEffect, 1000);
-        };
-
-        function confettiEffect() {
-            // Simple confetti
-            for(let i=0; i<100; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = '-10px';
-                confetti.style.width = '10px';
-                confetti.style.height = '10px';
-                confetti.style.background = ['#ff6b9d', '#ff9ff3', '#c44569', '#feca57'][Math.floor(Math.random()*4)];
-                confetti.style.pointerEvents = 'none';
-                confetti.style.zIndex = '1000';
-                confetti.style.animation = `float 3s linear forwards`;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 3000);
+        function prevSlide() {
+            if (currentSlide > 1) {
+                goToSlide(currentSlide - 1);
             }
         }
+
+        function goToSlide(slideNum) {
+            slides[currentSlide - 1].classList.remove('active');
+            currentSlide = slideNum;
+            slides[currentSlide - 1].classList.add('active');
+            updateProgress();
+            updateNavButtons();
+            
+            // Musik mulai di slide 2
+            if (currentSlide === 2 && bgMusic.paused) {
+                bgMusic.play().catch(() => {}); // Auto play (Chrome block kadang)
+            }
+        }
+
+        function restart() {
+            goToSlide(1);
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+        }
+
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            progress.innerHTML = '';
+            for (let i = 1; i <= totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === currentSlide) dot.classList.add('active');
+                progress.appendChild(dot);
+            }
+        }
+
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        // Floating hearts & stars
+        function createFloatingElements() {
+            const elements = ['💕','💖','💗','💓','💞','⭐','✨','🌟'];
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.className = 'floating ' + (Math.random() > 0.5 ? 'heart' : 'star');
+                el.innerHTML = elements[Math.floor(Math.random() * elements.length)];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                document.getElementById('floating').appendChild(el);
+                setTimeout(() => el.remove(), 10000);
+            }, 800);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Enter') nextSlide();
+        });
+
+        // Touch swipe
+        let startX = 0;
+        document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        document.addEventListener('touchend', e => {
+            const endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) nextSlide();
+            if (endX - startX > 50) prevSlide();
+        });
     </script>
 </body>
-  </html>
+</html>
